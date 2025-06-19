@@ -2,16 +2,31 @@ const express = require('express');
 const dotenv = require('dotenv');
 const sequelize = require('./config/db');
 
+const User = require('./models/user');
+
+const authRoutes = require('./routes/auth.routes');
+
+const errorHandler = require('./middlewares/errorHandler');
+
 dotenv.config();
 
 const app = express();
+
+// Middlewares
 app.use(express.json());
 
-const PORT = process.env.PORT || 3000;
+// Routes
+app.use('/api/auth', authRoutes);
+
+// Global Error Handler
+app.use(errorHandler);
+
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, async () => {
   try {
     await sequelize.authenticate();
+    await sequelize.sync();
     console.log('DB Connected');
     console.log(`Server running on http://localhost:${PORT}`);
   } catch (err) {
