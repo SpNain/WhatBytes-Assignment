@@ -4,9 +4,11 @@ const sequelize = require('./config/db');
 
 const User = require('./models/user');
 const Patient = require('./models/patient');
+const Doctor = require('./models/doctor');
 
 const authRoutes = require('./routes/auth.routes');
 const patientRoutes = require('./routes/patient.routes');
+const doctorRoutes = require('./routes/doctor.routes');
 
 const errorHandler = require('./middlewares/errorHandler');
 
@@ -20,6 +22,7 @@ app.use(express.json());
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/patients', patientRoutes);
+app.use('/api/doctors', doctorRoutes);
 
 // Global Error Handler
 app.use(errorHandler);
